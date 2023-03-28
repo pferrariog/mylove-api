@@ -1,0 +1,76 @@
+---
+fail_fast: true
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-toml
+        stages: [commit]
+      - id: end-of-file-fixer
+        stages: [commit]
+      - id: trailing-whitespace
+        stages: [commit]
+
+
+  - repo: local
+    hooks:
+#      - id: test
+#        name: Run Tests
+#        entry: poetry run python -m pytest
+#        pass_filenames: false
+#        language: system
+#        stages: [push]
+
+      - id: black
+        name: Run Black
+        entry: black .
+        language: system
+        types: [file, python]
+        stages: [commit]
+
+      - id: isort
+        name: Run Isort
+        entry: isort --force-single-line
+        language: system
+        types: [file, python]
+        stages: [commit]
+
+      # - id: flake8
+      #   name: Run Flake8
+      #   entry: pflake8
+      #   language: system
+      #   types: [file, python]
+      #   stages: [commit]
+
+      # - id: yamllint
+      #   name: Run Yamllint
+      #   entry: yamllint
+      #   language: system
+      #   types: [file, yaml]
+      #   stages: [commit]
+
+      # - id: bandit
+      #   name: Run Bandit
+      #   entry: bandit
+      #   language: system
+      #   types: [file, python]
+      #   args:
+      #     [
+      #       --configfile,
+      #       # pyproject.toml,
+      #       --severity-level,
+      #       all,
+      #       --confidence-level,
+      #       all,
+      #       --quiet,
+      #       --format,
+      #       custom,
+      #     ]
+      #   stages: [commit]
+
+      - id: commit-message
+        name: Check commit message
+        entry: cz check --commit-msg-file
+        language: system
+        stages: [commit-msg]
