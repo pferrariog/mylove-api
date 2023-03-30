@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 
 @dataclass
-class Love_messages(db.Model, SerializerMixin):
+class LoveMessages(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
     message = db.Column(db.String(255), nullable=False)
     date = db.Column(db.DateTime)

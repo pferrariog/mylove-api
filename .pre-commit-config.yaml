@@ -15,12 +15,12 @@ repos:
 
   - repo: local
     hooks:
-#      - id: test
-#        name: Run Tests
-#        entry: poetry run python -m pytest
-#        pass_filenames: false
-#        language: system
-#        stages: [push]
+      - id: test
+        name: Run Tests
+        entry: python -m pytest
+        pass_filenames: false
+        language: system
+        stages: [commit]
 
       - id: black
         name: Run Black
