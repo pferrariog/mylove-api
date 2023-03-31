@@ -1,6 +1,6 @@
 # MY LOVE API
 
-Created to send love to beloved one and soul mate!
+Created to send love to beloved one and soulmate!
 
 ## Requirements to use
 

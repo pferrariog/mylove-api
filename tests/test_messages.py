@@ -33,5 +33,14 @@ class TestLoveMessagesBP(TestFlaskBase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json, expected)
 
-    # def test_json_must_have_message(self):
-    #     ...
+    def test_json_must_have_message(self):
+        message = {}
+
+        expected = {"message": ["Missing data for required field."]}
+
+        response = self.client.post(
+            url_for("love_messages.send_love_to_my_babe"), json=message
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json, expected)

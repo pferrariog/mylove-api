@@ -4,6 +4,7 @@ from flask import Blueprint
 from flask import current_app
 from flask import jsonify
 from flask import request
+from marshmallow import ValidationError
 
 from mylove.extensions.database import LoveMessages
 from mylove.extensions.serializer import LoveMessageSchema
@@ -27,7 +28,13 @@ def get_love_messages():
 def send_love_to_my_babe():
     love_schema = LoveMessageSchema()
     request.json["date"] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
-    message = love_schema.load(request.json)
+    try:
+        message = love_schema.load(request.json)
+    except ValidationError as error:
+        return jsonify(error.messages), 400
+    except Exception as unknown_error:
+        return jsonify(unknown_error.messages), 500
+
     current_app.db.session.add(message)
     current_app.db.session.commit()
     return jsonify({"message": "love sended"}), 201
