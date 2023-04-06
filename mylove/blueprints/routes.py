@@ -43,11 +43,11 @@ def send_love_to_my_babe():
 @bp_messages.route("/lovemessages/<id>", methods=["PUT"])
 def update_love_message(id):
     love_schema = LoveMessageSchema()
-    query = LoveMessages.query.filter(LoveMessages.id == id)
+    query = LoveMessages.query.get_or_404(id, description="message not found")
     query.update(request.json)
     current_app.db.session.commit()
 
-    return love_schema.jsonify(query.first())
+    return love_schema.jsonify(query.first()), 200
 
 
 @bp_messages.route("/lovemessages/<id>", methods=["DELETE"])
@@ -55,4 +55,4 @@ def delete_love_message(id):
     LoveMessages.query.filter(LoveMessages.id == id).delete()
     current_app.db.session.commit()
 
-    return jsonify({"message": "message deleted :c"})
+    return jsonify({"message": "message deleted :c"}), 200
